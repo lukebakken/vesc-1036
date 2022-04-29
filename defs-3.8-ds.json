@@ -2,11 +2,9 @@
   "users": [
     {
       "name": "guest",
-      "password_hash": "ftlu5CRbqi8FENPZhvXwfOYfJqNgJ0T5Q/63B95CnJlVGW2l",
+      "password_hash": "yP7Lut8rvKoxh4bjBBEa4RcJ6yX/HdjQtBN1FzhN+NRRcAP9",
       "hashing_algorithm": "rabbit_password_hashing_sha256",
-      "tags": [
-        "administrator"
-      ],
+      "tags": "administrator",
       "limits": {}
     }
   ],
