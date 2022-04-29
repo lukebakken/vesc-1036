@@ -29,7 +29,7 @@ services:
     networks:
       - rabbitnet
     command:
-      - --uri=amqp://docker-rmq-us-1
+      - --uri=amqp://vesc-1036-rmq-us-1
       - --servers-startup-timeout=30
       - --rate=1
       - --producers=1
@@ -47,7 +47,7 @@ services:
     networks:
       - rabbitnet
     command:
-      - --uri=amqp://docker-rmq-ds-1
+      - --uri=amqp://vesc-1036-rmq-ds-1
       - --servers-startup-timeout=30
       - --producers=0
       - --consumers=1

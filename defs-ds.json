@@ -37,7 +37,7 @@
         "message-ttl": 259200000,
         "prefetch-count": 1000,
         "trust-user-id": true,
-        "uri": "amqp://rmq0-us.local:5672"
+        "uri": "amqp://vesc-1036-rmq-us-1"
       },
       "vhost": "/",
       "component": "federation-upstream",
@@ -60,31 +60,7 @@
   ],
   "queues": [
     {
-      "name": "federated-ds-0",
-      "vhost": "/",
-      "durable": true,
-      "auto_delete": false
-    },
-    {
-      "name": "federated-ds-1",
-      "vhost": "/",
-      "durable": true,
-      "auto_delete": false
-    },
-    {
-      "name": "federated-ds-2",
-      "vhost": "/",
-      "durable": true,
-      "auto_delete": false
-    },
-    {
-      "name": "federated-ds-3",
-      "vhost": "/",
-      "durable": true,
-      "auto_delete": false
-    },
-    {
-      "name": "federated-ds-4",
+      "name": "federated-ds",
       "vhost": "/",
       "durable": true,
       "auto_delete": false
@@ -105,41 +81,9 @@
     {
       "source": "federated-direct",
       "vhost": "/",
-      "destination": "federated-ds-0",
+      "destination": "federated-ds",
       "destination_type": "queue",
-      "routing_key": "federated-0",
-      "arguments": {}
-    },
-    {
-      "source": "federated-direct",
-      "vhost": "/",
-      "destination": "federated-ds-1",
-      "destination_type": "queue",
-      "routing_key": "federated-1",
-      "arguments": {}
-    },
-    {
-      "source": "federated-direct",
-      "vhost": "/",
-      "destination": "federated-ds-2",
-      "destination_type": "queue",
-      "routing_key": "federated-2",
-      "arguments": {}
-    },
-    {
-      "source": "federated-direct",
-      "vhost": "/",
-      "destination": "federated-ds-3",
-      "destination_type": "queue",
-      "routing_key": "federated-3",
-      "arguments": {}
-    },
-    {
-      "source": "federated-direct",
-      "vhost": "/",
-      "destination": "federated-ds-4",
-      "destination_type": "queue",
-      "routing_key": "federated-4",
+      "routing_key": "federated",
       "arguments": {}
     }
   ]
