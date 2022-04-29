@@ -8,6 +8,7 @@ networks:
 services:
   rmq-ds:
     image: vesc-1036:latest
+    hostname: rmq-ds
     networks:
       - rabbitnet
     ports:
@@ -15,8 +16,10 @@ services:
       - 15682:15672
     volumes:
       - ./defs-ds.json:/var/lib/rabbitmq/definitions.json
+      - ./mnesia/ds:/var/lib/rabbitmq/mnesia
   rmq-us:
     image: vesc-1036:latest
+    hostname: rmq-us
     networks:
       - rabbitnet
     ports:
@@ -24,6 +27,7 @@ services:
       - 15672:15672
     volumes:
       - ./defs-us.json:/var/lib/rabbitmq/definitions.json
+      - ./mnesia/us:/var/lib/rabbitmq/mnesia
   perf-test-us:
     image: pivotalrabbitmq/perf-test:latest
     networks:
