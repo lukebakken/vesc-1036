@@ -32,6 +32,15 @@
   "queues": [
   ],
   "exchanges": [
+    {
+      "name": "federated-direct",
+      "vhost": "/",
+      "type": "direct",
+      "durable": false,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
   ],
   "bindings": [
   ]
