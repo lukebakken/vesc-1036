@@ -11,8 +11,8 @@ fresh: down clean up import
 image-base:
 	docker build --pull --tag rabbitmq-base:latest --file $(CURDIR)/docker/base .
 
-image-vesc-1034:
-	docker build --tag vesc-1034:latest --file $(CURDIR)/docker/vesc-1034 .
+image-vesc-1036:
+	docker build --tag vesc-1036:latest --file $(CURDIR)/docker/vesc-1036 .
 
 import:
 	/bin/sh $(CURDIR)/import-defs.sh
