@@ -97,7 +97,7 @@ services:
     networks:
       - rabbitnet
     command:
-      - --uris=amqp://rmq0-du,amqp://rmq1-ds,amqp://rmq2-ds
+      - --uris=amqp://rmq0-ds,amqp://rmq1-ds,amqp://rmq2-ds
       - --servers-startup-timeout=30
       - --producers=0
       - --consumers=3
