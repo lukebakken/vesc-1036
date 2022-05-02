@@ -71,6 +71,7 @@ the data volume directory volume.
     ```
     ./upgrade.sh us
     ```
+* Confirm that the downstream federation link has re-started. There is a 60 second reconnect delay.
 * Downstream:
     ```
     ./upgrade.sh ds
