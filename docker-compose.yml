@@ -6,37 +6,83 @@ networks:
     driver: bridge
 
 services:
-  rmq-ds:
+  rmq0-ds:
     image: vesc-1036:latest
-    hostname: rmq-ds
+    hostname: rmq0-ds
     networks:
       - rabbitnet
     ports:
       # HOST:CONTAINER
       - 15682:15672
     volumes:
-      - ./defs-ds.json:/var/lib/rabbitmq/definitions.json
-      - ./mnesia/ds:/var/lib/rabbitmq/mnesia
-  rmq-us:
+      - ./defs-3.8-ds.json:/var/lib/rabbitmq/definitions.json
+      - ./rabbitmq-ds.conf:/etc/rabbitmq/conf.d/20-cluster.conf
+      - ./mnesia/rmq0-ds:/var/lib/rabbitmq/mnesia
+  rmq1-ds:
     image: vesc-1036:latest
-    hostname: rmq-us
+    hostname: rmq1-ds
+    networks:
+      - rabbitnet
+    ports:
+      # HOST:CONTAINER
+      - 15683:15672
+    volumes:
+      - ./rabbitmq-ds.conf:/etc/rabbitmq/conf.d/20-cluster.conf
+      - ./mnesia/rmq1-ds:/var/lib/rabbitmq/mnesia
+  rmq2-ds:
+    image: vesc-1036:latest
+    hostname: rmq2-ds
+    networks:
+      - rabbitnet
+    ports:
+      # HOST:CONTAINER
+      - 15684:15672
+    volumes:
+      - ./rabbitmq-ds.conf:/etc/rabbitmq/conf.d/20-cluster.conf
+      - ./mnesia/rmq2-ds:/var/lib/rabbitmq/mnesia
+  rmq0-us:
+    image: vesc-1036:latest
+    hostname: rmq0-us
     networks:
       - rabbitnet
     ports:
       # HOST:CONTAINER
       - 15672:15672
     volumes:
-      - ./defs-us.json:/var/lib/rabbitmq/definitions.json
-      - ./mnesia/us:/var/lib/rabbitmq/mnesia
+      - ./defs-3.8-us.json:/var/lib/rabbitmq/definitions.json
+      - ./rabbitmq-us.conf:/etc/rabbitmq/conf.d/20-cluster.conf
+      - ./mnesia/rmq0-us:/var/lib/rabbitmq/mnesia
+  rmq1-us:
+    image: vesc-1036:latest
+    hostname: rmq1-us
+    networks:
+      - rabbitnet
+    ports:
+      # HOST:CONTAINER
+      - 15673:15672
+    volumes:
+      - ./rabbitmq-us.conf:/etc/rabbitmq/conf.d/20-cluster.conf
+      - ./mnesia/rmq1-us:/var/lib/rabbitmq/mnesia
+  rmq2-us:
+    image: vesc-1036:latest
+    hostname: rmq2-us
+    networks:
+      - rabbitnet
+    ports:
+      # HOST:CONTAINER
+      - 15674:15672
+    volumes:
+      - ./rabbitmq-us.conf:/etc/rabbitmq/conf.d/20-cluster.conf
+      - ./mnesia/rmq2-us:/var/lib/rabbitmq/mnesia
   perf-test-us:
     image: pivotalrabbitmq/perf-test:latest
     networks:
       - rabbitnet
     command:
-      - --uri=amqp://vesc-1036-rmq-us-1
+      - --uris=amqp://rmq0-us,amqp://rmq1-us,amqp://rmq2-us
       - --servers-startup-timeout=30
       - --rate=1
-      - --producers=1
+      - --producers=3
       - --consumers=0
       - --predeclared
       - --exchange=federated-direct
@@ -51,10 +97,10 @@ services:
     networks:
       - rabbitnet
     command:
-      - --uri=amqp://vesc-1036-rmq-ds-1
+      - --uris=amqp://rmq0-du,amqp://rmq1-ds,amqp://rmq2-ds
       - --servers-startup-timeout=30
       - --producers=0
-      - --consumers=1
+      - --consumers=3
       - --predeclared
       - --queue=federated-ds
     depends_on:

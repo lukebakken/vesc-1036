@@ -36,7 +36,7 @@
         "prefetch-count": 1000,
         "reconnect-delay": 60,
         "trust-user-id": true,
-        "uri": "amqp://vesc-1036-rmq-us-1"
+        "uri": ["amqp://rmq0-us", "amqp://rmq1-us", "amqp://rmq2-us"]
       },
       "vhost": "/",
       "component": "federation-upstream",
