@@ -76,7 +76,7 @@ the data volume directory volume.
     ./upgrade.sh ds
     ```
 
-At this point, go to the management UI on a downs-ream node and check the
+At this point, go to the management UI on a downstream node and check the
 federation link status. It will not be running. Re-importing the defs has no
 effect, either. The only way to re-establish the federation link is to delete
 and re-create the policy.
