@@ -3,7 +3,7 @@
 ## Initial docker images
 
 ```
-make image-base-3.8
+make VERSION=3.8-management image-base
 make image-vesc-1036
 ```
 
@@ -57,7 +57,7 @@ downstream cluster UI
 Upgrade the docker images:
 
 ```
-make image-base
+make VERSION=3-management image-base
 make image-vesc-1036
 ```
 

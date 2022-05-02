@@ -1,9 +1,8 @@
-.PHONY: clean down fresh image-base import up
+.PHONY: clean down fresh image-base image-vesc-1036 import up
 
 clean: down
 	sudo chown -R "$(USER):$(USER)" .
 	rm -vrf $(CURDIR)/mnesia/*/rabbit*
-	docker system prune --force
 	docker image rm vesc-1036:latest
 	docker image rm rabbitmq-base:latest
 
@@ -12,11 +11,10 @@ down:
 
 fresh: down clean up import
 
-image-base:
-	docker build --pull --tag rabbitmq-base:latest --file $(CURDIR)/docker/base .
+VERSION ?= 3-management
 
-image-base-3.8:
-	docker build --pull --tag rabbitmq-base:latest --file $(CURDIR)/docker/base-3.8 .
+image-base:
+	docker build --pull --tag rabbitmq-base:latest --build-arg VERSION=$(VERSION) --file $(CURDIR)/docker/base .
 
 image-vesc-1036:
 	docker build --tag vesc-1036:latest --file $(CURDIR)/docker/vesc-1036 .
