@@ -80,7 +80,7 @@ services:
       - rabbitnet
     command:
       - --uris=amqp://rmq0-us,amqp://rmq1-us,amqp://rmq2-us
-      - --servers-startup-timeout=30
+      - --servers-startup-timeout=120
       - --rate=1
       - --producers=3
       - --consumers=0
@@ -98,7 +98,7 @@ services:
       - rabbitnet
     command:
       - --uris=amqp://rmq0-ds,amqp://rmq1-ds,amqp://rmq2-ds
-      - --servers-startup-timeout=30
+      - --servers-startup-timeout=120
       - --producers=0
       - --consumers=3
       - --predeclared
