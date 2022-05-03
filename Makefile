@@ -3,8 +3,6 @@
 clean: down
 	sudo chown -R "$(USER):$(USER)" .
 	rm -vrf $(CURDIR)/mnesia/*/rabbit*
-	docker image rm vesc-1036:latest
-	docker image rm rabbitmq-base:latest
 
 down:
 	docker compose down

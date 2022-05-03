@@ -10,11 +10,11 @@ source "$dir/common.sh"
 echo "[INFO] upgrading 'ds' cluster!"
 declare -i rmq_node_idx=0
 
-for rmq_node_idx in 1 2 3
+for _upgrade_idx in 1 2 3
 do
-    rmq_nodename="$(make_node_name "$rmq_node_idx")"
-    "$HOME/development/rabbitmq/rabbitmq-server/sbin/rabbitmq-upgrade" -n "$rmq_nodename" drain
-    sleep 10
-    stop_node "$rmq_node_idx"
-    start_node "$rmq_node_idx"
+    _upgrade_nodename="$(make_node_name "$_upgrade_idx")"
+    "$HOME/development/rabbitmq/rabbitmq-server_v3.8.x/sbin/rabbitmq-upgrade" -n "$_upgrade_nodename" drain
+    sleep 5
+    stop_node "$_upgrade_idx"
+    start_node "$_upgrade_idx"
 done
