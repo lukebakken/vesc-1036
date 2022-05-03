@@ -12,8 +12,8 @@ fi
 declare -r rmq_nodename="rabbit-$rmq_node_idx@$hostname"
 declare -ri base_idx="$((rmq_node_idx - 1))"
 
-declare -ri rmq_node_port="$((base_idx + 5672))"
-declare -ri rmq_management_port="$((base_idx + 15672))"
+declare -ri rmq_node_port="$((base_idx + 5682))"
+declare -ri rmq_management_port="$((base_idx + 15682))"
 
 make -C "$HOME/development/rabbitmq/rabbitmq-server" \
     PLUGINS='rabbitmq_management rabbitmq_top rabbitmq_federation rabbitmq_federation_management' \
