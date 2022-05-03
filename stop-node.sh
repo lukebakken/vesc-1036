@@ -1,13 +1,10 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-declare -r hostname="$(hostname -s)"
-declare -r rmq_node_idx="${1:-1}"
+readonly dir="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
+# shellcheck source=common.sh
+source "$dir/common.sh"
 
-if (( rmq_node_idx < 1 || rmq_node_idx > 3 ))
-then
-    echo '[ERROR] first argument must be 1, 2 or 3' 2>&1
-    exit 1
-fi
+declare -ri rmq_node_idx="${1:-1}"
+check_node_idx "$rmq_node_idx"
 
-declare -r rmq_nodename="rabbit-$rmq_node_idx@$hostname"
-"$HOME/development/rabbitmq/rabbitmq-server/sbin/rabbitmqctl" -n "$rmq_nodename" shutdown
+stop_node "$rmq_node_idx"
