@@ -62,5 +62,5 @@ services:
       - rmq2-us
     ports:
       # HOST:CONTAINER
-      - 15672:15672
-      - 5672:5672
+      - 15682:15672
+      - 5682:5672
