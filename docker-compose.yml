@@ -6,48 +6,11 @@ networks:
     driver: bridge
 
 services:
-  rmq0-ds:
-    image: vesc-1036:latest
-    hostname: rmq0-ds
-    networks:
-      - rabbitnet
-    ports:
-      # HOST:CONTAINER
-      - 15682:15672
-    volumes:
-      - ./defs-3.8-ds.json:/var/lib/rabbitmq/definitions.json
-      - ./rabbitmq-ds.conf:/etc/rabbitmq/conf.d/20-cluster.conf
-      - ./mnesia/rmq0-ds:/var/lib/rabbitmq/mnesia
-  rmq1-ds:
-    image: vesc-1036:latest
-    hostname: rmq1-ds
-    networks:
-      - rabbitnet
-    ports:
-      # HOST:CONTAINER
-      - 15683:15672
-    volumes:
-      - ./rabbitmq-ds.conf:/etc/rabbitmq/conf.d/20-cluster.conf
-      - ./mnesia/rmq1-ds:/var/lib/rabbitmq/mnesia
-  rmq2-ds:
-    image: vesc-1036:latest
-    hostname: rmq2-ds
-    networks:
-      - rabbitnet
-    ports:
-      # HOST:CONTAINER
-      - 15684:15672
-    volumes:
-      - ./rabbitmq-ds.conf:/etc/rabbitmq/conf.d/20-cluster.conf
-      - ./mnesia/rmq2-ds:/var/lib/rabbitmq/mnesia
   rmq0-us:
     image: vesc-1036:latest
     hostname: rmq0-us
     networks:
       - rabbitnet
-    ports:
-      # HOST:CONTAINER
-      - 15672:15672
     volumes:
       - ./defs-3.8-us.json:/var/lib/rabbitmq/definitions.json
       - ./rabbitmq-us.conf:/etc/rabbitmq/conf.d/20-cluster.conf
@@ -57,9 +20,6 @@ services:
     hostname: rmq1-us
     networks:
       - rabbitnet
-    ports:
-      # HOST:CONTAINER
-      - 15673:15672
     volumes:
       - ./rabbitmq-us.conf:/etc/rabbitmq/conf.d/20-cluster.conf
       - ./mnesia/rmq1-us:/var/lib/rabbitmq/mnesia
@@ -68,9 +28,6 @@ services:
     hostname: rmq2-us
     networks:
       - rabbitnet
-    ports:
-      # HOST:CONTAINER
-      - 15674:15672
     volumes:
       - ./rabbitmq-us.conf:/etc/rabbitmq/conf.d/20-cluster.conf
       - ./mnesia/rmq2-us:/var/lib/rabbitmq/mnesia
@@ -79,7 +36,7 @@ services:
     networks:
       - rabbitnet
     command:
-      - --uris=amqp://rmq0-us,amqp://rmq1-us,amqp://rmq2-us
+      - --uris=amqp://haproxy-us
       - --servers-startup-timeout=120
       - --rate=1
       - --producers=3
@@ -92,17 +49,18 @@ services:
     depends_on:
       - rmq-us
     restart: on-failure
-  perf-test-ds:
-    image: pivotalrabbitmq/perf-test:latest
+  haproxy-us:
+    image: haproxy:latest
+    hostname: haproxy-us
     networks:
       - rabbitnet
-    command:
-      - --uris=amqp://rmq0-ds,amqp://rmq1-ds,amqp://rmq2-ds
-      - --servers-startup-timeout=120
-      - --producers=0
-      - --consumers=3
-      - --predeclared
-      - --queue=federated-ds
+    volumes:
+      - ./haproxy-us.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
     depends_on:
-      - rmq-ds
-    restart: on-failure
+      - rmq0-us
+      - rmq1-us
+      - rmq2-us
+    ports:
+      # HOST:CONTAINER
+      - 15682:15672
+      - 5682:5672

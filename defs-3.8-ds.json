@@ -34,7 +34,7 @@
         "prefetch-count": 1000,
         "reconnect-delay": 60,
         "trust-user-id": true,
-        "uri": ["amqp://rmq0-us", "amqp://rmq1-us", "amqp://rmq2-us"]
+        "uri": "amqp://localhost:5682"
       },
       "vhost": "/",
       "component": "federation-upstream",
