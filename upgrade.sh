@@ -13,7 +13,6 @@ do
     # NB: https://github.com/docker/compose/issues/1262
     container_id="$(docker compose ps -q "$SVC")"
     docker exec "$container_id" /opt/rabbitmq/sbin/rabbitmq-upgrade drain
-    sleep 10
     docker compose stop "$SVC"
     docker compose up --detach --no-deps "$SVC"
 done
