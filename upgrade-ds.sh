@@ -14,7 +14,7 @@ for _upgrade_idx in 1 2 3
 do
     _upgrade_nodename="$(make_node_name "$_upgrade_idx")"
     "$HOME/development/rabbitmq/rabbitmq-server_v3.8.x/sbin/rabbitmq-upgrade" -n "$_upgrade_nodename" drain
-    sleep 5
+    # sleep 5
     stop_node "$_upgrade_idx"
     start_node "$_upgrade_idx"
 done
