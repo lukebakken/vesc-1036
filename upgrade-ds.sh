@@ -8,13 +8,13 @@ readonly dir="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 source "$dir/common.sh"
 
 echo "[INFO] upgrading 'ds' cluster!"
-declare -i rmq_node_idx=0
 
-for _upgrade_idx in 1 2 3
+declare -i _upgrade_idx=0
+for (( _upgrade_idx=1; _upgrade_idx <= 3; _upgrade_idx++ ))
 do
     _upgrade_nodename="$(make_node_name "$_upgrade_idx")"
     "$HOME/development/rabbitmq/rabbitmq-server_v3.8.x/sbin/rabbitmq-upgrade" -n "$_upgrade_nodename" drain
-    # sleep 5
     stop_node "$_upgrade_idx"
+    sleep 5
     start_node "$_upgrade_idx"
 done
