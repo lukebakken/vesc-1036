@@ -52,6 +52,17 @@
         "federation-upstream": "RMQ-US"
       },
       "priority": 10
+    },
+    {
+      "vhost": "/",
+      "name": "ha-federated",
+      "pattern": "^federated",
+      "apply-to": "queues",
+      "definition": {
+        "ha-mode": "exactly",
+        "ha-params": 2
+      },
+      "priority": 10
     }
   ],
   "queues": [
