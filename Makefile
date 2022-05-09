@@ -2,7 +2,7 @@
 
 clean: down
 	sudo chown -R "$(USER):$(USER)" .
-	rm -vrf $(CURDIR)/mnesia/*/rabbit*
+	rm -rf $(CURDIR)/mnesia/*/rabbit*
 
 down:
 	docker compose down
